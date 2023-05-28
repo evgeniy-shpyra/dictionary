@@ -7,11 +7,13 @@ import userSlice from './features/userSlice'
 import wordSlice from './features/wordSlice'
 import { dictionaryApi } from './services/dictionaryApi'
 import studySlice from './features/studySlice'
+import { historyApi } from './services/history'
 
 const store = configureStore({
     reducer: {
         [dictionaryApi.reducerPath]: dictionaryApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
+        [historyApi.reducerPath]: historyApi.reducer,
         user: userSlice,
         app: appSlice,
         dictionary: dictionarySlice,
@@ -22,6 +24,7 @@ const store = configureStore({
         getDefaultMiddleware().concat([
             dictionaryApi.middleware,
             userApi.middleware,
+            historyApi.middleware,
         ]),
 })
 export type RootState = ReturnType<typeof store.getState>

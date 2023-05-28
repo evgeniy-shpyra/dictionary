@@ -5,6 +5,7 @@ import DateSession from '../../components/history/DateSession'
 import Word from '../../components/history/Word'
 import { historyApi } from '../../redux/services/history'
 import useErrorHandler from '../../hooks/useErrorHandler'
+import Preloader from '../../assets/Preloader'
 
 const history = [
     {
@@ -82,12 +83,17 @@ const HistoryPage = () => {
             })
     }, [data])
 
+    if(isLoading){
+        return <Preloader />
+    }
+
     return (
         <PageContainer withNavbar withMenu>
             <div className="w-full max-w-[710px] h-full mx-auto px-[10px] pt-[40px] animate-appearance pb-[40px]">
                 <h1 className="text-white tracking-wide backdrop:font-medium text-[32px] sm:text-[40px] pb-[20px] leading-none text-center">
-                    History of quizzes
+                    {data && data.length >   0 ? 'History of quizzes' : 'History is empty' }
                 </h1>
+
                 {Array.from(items).map(([key, value], index) => (
                     <div key={key}>
                         <DateSession date={key} isFirst={index === 0} />
