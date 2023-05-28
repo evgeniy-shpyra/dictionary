@@ -68,7 +68,7 @@ export const dictionaryApi = createApi({
             query: (body) => {
                 console.log(body)
                 return {
-                    url: '/word/dictionary',
+                    url: '/dictionary',
                     method: 'POST',
                     body,
                 }

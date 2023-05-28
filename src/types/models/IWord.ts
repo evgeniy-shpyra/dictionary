@@ -3,7 +3,7 @@ export interface IWord {
     name: string
     translation: string
     createdAt: string
-    updatedAt: string
+    // updatedAt: string
     isLearned: boolean
 }
 
