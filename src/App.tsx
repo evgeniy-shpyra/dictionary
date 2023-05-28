@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import useMatchMedia from 'use-match-media-hook'
 import { setDeviceType } from './redux/features/appSlice'
 import MainNavigation from './components/navigation/MainNavigation'
@@ -19,7 +19,7 @@ const queries = [
 function App() {
     const dispatch = useAppDispatch()
 
-    const { isLoading } = userApi.useGetUserInfoQuery()
+    const { isLoading = false } = userApi.useGetUserInfoQuery()
 
     const [isMobile, isTablet, isDesktop] = useMatchMedia(queries)
 
@@ -45,7 +45,7 @@ function App() {
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
                     </Routes>
-                )}
+                 )}
             </div>
             <InfoBlock />
 

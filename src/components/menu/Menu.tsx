@@ -15,19 +15,11 @@ const Menu = () => {
 
     return (
         <div className="absolute top-[15px] right-[15px]">
-            {/* <MenuIcon
-                onClick={() => {
-                    setIsOpen((prev) => !prev)
-                }}
-                width="32px"
-                height="32px"
-                color="#fff"
-            /> */}
             <div
                 onClick={() => {
                     setIsOpen((prev) => !prev)
                 }}
-                className="menu-button"
+                className={`menu-button${isOpen ? ' menu-button-active' : ''} `}
             >
                 <span />
             </div>
