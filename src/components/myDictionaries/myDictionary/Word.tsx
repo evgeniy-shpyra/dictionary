@@ -11,9 +11,10 @@ import TextInput from '../../input/TextInput'
 import Status from '../../info/Status'
 import { IWord } from '../../../types/models'
 import Button from '../../input/Button'
+import PreloaderForElement from '../../../assets/PreloaderForElement'
 
 type WordProps = {
-    setIdOfChangingElement: React.Dispatch<React.SetStateAction<{ id: number; method: 'delete' | 'post' | 'patch'; } | null>>
+    setIdOfChangingElement: React.Dispatch<React.SetStateAction<{ id?: number | undefined; method: 'delete' | 'post' | 'patch'; body?: IWord | undefined; } | null>>
     word: IWord
     isChecked: boolean
     onSelectWord: (word: IWord, isChecked: boolean) => void
@@ -22,7 +23,7 @@ type WordProps = {
 const Word: React.FC<WordProps> = ({ word, onSelectWord, isChecked, setIdOfChangingElement }) => {
     const deviceType = useAppSelector((state) => state.app.deviceType)
 
-    const [updateWord, { error: updateError, isSuccess: isSuccessUpdate }] =
+    const [updateWord, { error: updateError, isLoading: isLoadingUpdating, isSuccess: isSuccessUpdate }] =
         dictionaryApi.useUpdateWordMutation()
     const [deleteWord, { error: deleteError, isSuccess: isSuccessDelete }] =
         dictionaryApi.useDeleteWordMutation()
@@ -133,6 +134,7 @@ const Word: React.FC<WordProps> = ({ word, onSelectWord, isChecked, setIdOfChang
 
     return (
         <div className="bg-white p-[10px] sm:p-[24px] mb-[10px] rounded-[15px] sm:rounded-[25px] shadow-secondary relative">
+            
             <div className="absolute top-[8px] right-[8px] sm:top-[12px] sm:right-[12px]">
                 {word.isLearned ? (
                     <Status type="success" />
@@ -231,6 +233,8 @@ const Word: React.FC<WordProps> = ({ word, onSelectWord, isChecked, setIdOfChang
                     </div>
                 </div>
             </div>
+           
+
         </div>
     )
 }

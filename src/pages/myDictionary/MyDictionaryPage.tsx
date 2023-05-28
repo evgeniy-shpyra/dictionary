@@ -35,6 +35,14 @@ const DictionaryPage: React.FC = () => {
         pages: 1,
     })
 
+    const addWord = (newWord: IWord) => {
+        setDataFromApi(prevData => {
+            const newData = prevData
+            newData.words.unshift(newWord)
+            return newData
+        })
+    }
+
     const { data, error, isLoading } =
         dictionaryApi.useGetWordsFromMyDictionaryQuery({
             page: queryData.page,
@@ -59,16 +67,58 @@ const DictionaryPage: React.FC = () => {
 
     const [idOfChangingElement, setIdOfChangingElement] =
         React.useState<null | {
-            id: number
+            id?: number
             method: 'delete' | 'post' | 'patch'
         }>(null)
 
     React.useEffect(() => {
-        if (idOfChangingElement) {
-            switch (idOfChangingElement.method) {
-                case 'patch':
-                    // const indexOfUpdatedElement = dataFromApi.words.findIndex(item => item.id === idOfChangingElement.id)
-                    break
+        if (idOfChangingElement && data) {
+            if (idOfChangingElement.method === 'patch') {
+                const indexOfUpdatedElementInVueArray =
+                    dataFromApi.words.findIndex(
+                        (item) => item.id === idOfChangingElement.id
+                    )
+                const indexOfUpdatedElementInApiArray = data.words.findIndex(
+                    (item) => item.id === idOfChangingElement.id
+                )
+                if (indexOfUpdatedElementInVueArray >= 0)
+                    setDataFromApi((prevData) => {
+                        const newState = prevData
+                        newState.words.splice(
+                            indexOfUpdatedElementInVueArray,
+                            1,
+                            data.words[indexOfUpdatedElementInApiArray]
+                        )
+                        return {
+                            pages: data.pages,
+                            words: [...prevData.words],
+                        }
+                    })
+            } else if (idOfChangingElement.method === 'delete') {
+                const indexOfUpdatedElementInVueArray =
+                    dataFromApi.words.findIndex(
+                        (item) => item.id === idOfChangingElement.id
+                    )
+                if (indexOfUpdatedElementInVueArray >= 0)
+                    setDataFromApi((prevData) => {
+                        const newState = prevData
+                        newState.words.splice(
+                            indexOfUpdatedElementInVueArray,
+                            1
+                        )
+                        return {
+                            pages: data.pages,
+                            words: [...prevData.words],
+                        }
+                    })
+            } else if (idOfChangingElement.method === 'post') {
+                setDataFromApi((prevData) => {
+                    
+                    return {
+                        pages: data.pages,
+                        words: prevData.words,
+                    }
+                })
             }
         } else if (data) {
             setDataFromApi((prevData) => ({
@@ -113,7 +163,11 @@ const DictionaryPage: React.FC = () => {
                                     isLoading={isLoading}
                                 />
                                 <div ref={ref} />
-                                <AddWord dictionaryId={Number(id)} />
+                                <AddWord
+                                    setIdOfChangingElement={setIdOfChangingElement}
+                                    addWord={addWord}
+                                    dictionaryId={Number(id)}
+                                />
                             </ul>
                         )}
                     </main>

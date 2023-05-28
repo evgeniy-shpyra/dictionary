@@ -8,7 +8,7 @@ import WordsLoader from './WordsLoader'
 
 type WordsProps = {
     dictionaryId: number
-    setIdOfChangingElement: React.Dispatch<React.SetStateAction<{ id: number; method: 'delete' | 'post' | 'patch'; } | null>>
+    setIdOfChangingElement: React.Dispatch<React.SetStateAction<{ id?: number | undefined; method: 'delete' | 'post' | 'patch'; body?: IWord | undefined; } | null>>
     words: IWord[]
     isLoading: boolean
 }
