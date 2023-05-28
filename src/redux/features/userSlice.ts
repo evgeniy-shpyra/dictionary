@@ -17,7 +17,13 @@ const initialState: initialStateType = {
 const userSlice = createSlice({
     name: 'userSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        logOut: (state, action: PayloadAction<void>) => {
+            localStorage.removeItem('token')
+            state.authorizationStatus = AuthorizationEnum.Logout
+            state.userData = null
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addMatcher(
@@ -40,16 +46,16 @@ const userSlice = createSlice({
                     }
                 }
             )
-            .addMatcher(
-                userApi.endpoints.logout.matchFulfilled,
-                (state, action) => {
-                  
-                    localStorage.removeItem('token')
-                    state.authorizationStatus = AuthorizationEnum.Logout
-                    state.userData = null
-                    
-                }
-            )
+            // .addMatcher(
+            //     userApi.endpoints.logout.matchFulfilled,
+            //     (state, action) => {
+
+            //         localStorage.removeItem('token')
+            //         state.authorizationStatus = AuthorizationEnum.Logout
+            //         state.userData = null
+
+            //     }
+            // )
             .addMatcher(
                 userApi.endpoints.login.matchPending,
                 (state, action) => {
@@ -93,6 +99,7 @@ const userSlice = createSlice({
     },
 })
 
-// export const {} = userSlice.actions
+export const { logOut } = userSlice.actions
+
 
 export default userSlice.reducer

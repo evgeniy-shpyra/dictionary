@@ -34,7 +34,7 @@ const MyDictionaries: React.FC = () => {
                     <MyDictionary
                         key={item.id}
                         name={item.name}
-                        words={0}
+                        words={item.total}
                         learnedWords={0}
                         id={item.id}
                         access={'public'}

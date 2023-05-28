@@ -3,9 +3,9 @@ import { useAppSelector } from '../../hooks/reduxHooks'
 
 import Ball from './Ball'
 
-type AnimatedBg = {}
 
-const AnimatedBg: React.FC<AnimatedBg> = () => {
+
+const AnimatedBg: React.FC = () => {
     const deviceType = useAppSelector((state) => state.app.deviceType)
     const backgroundColor = useAppSelector(
         (state) => state.app.colors.primaryColor

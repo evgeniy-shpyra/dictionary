@@ -6,6 +6,7 @@ import MyDictionaryPage from '../../pages/myDictionary/MyDictionaryPage'
 import PublicDictionaryPage from '../../pages/publicDictionary/PublicDictionaryPage'
 import withAuth from '../../hoc/withAuth'
 import StudyPage from '../../pages/study/StudyPage'
+import HistoryPage from '../../pages/history/HistoryPage'
 import { NavigationEnum } from '../../types/navigation'
 import PreviewPage from '../../pages/preview/PreviewPage'
 import MyDictionariesPage from '../../pages/myDictionary/MyDictionariesPage'
@@ -13,6 +14,7 @@ import MyDictionariesPage from '../../pages/myDictionary/MyDictionariesPage'
 const CreateDictionaryPageContainer = withAuth(CreateDictionaryPage)
 const MyDictionaryPageContainer = withAuth(MyDictionaryPage)
 const StudyPageContainer = withAuth(StudyPage)
+const HistoryPageContainer = withAuth(HistoryPage)
 const MyDictionariesPageContainer = withAuth(MyDictionariesPage)
 
 const MainNavigation = () => {
@@ -50,6 +52,10 @@ const MainNavigation = () => {
                 <Route
                     path={NavigationEnum.study}
                     element={<StudyPageContainer />}
+                />
+                 <Route
+                    path={NavigationEnum.history}
+                    element={<HistoryPageContainer />}
                 />
             </Routes>
         </div>

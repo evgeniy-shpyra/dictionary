@@ -28,13 +28,13 @@ const dictionarySlice = createSlice({
             dictionaryApi.endpoints.getMyDictionaries.matchFulfilled,
             (state, action: PayloadAction<IDictionary[]>) => {
                 
-                const totalWords = 0
+                let totalWords = 0
                 const totalLearnedWords = 0
 
-                // action.payload.forEach((item) => {
-                    // totalWords += item.total
+                action.payload.forEach((item) => {
+                    totalWords += item.total
                     // totalLearnedWords += item.learned
-                // })
+                })
 
                 state.totalInformationAboutMyDictionaries.totalLearnedWords =
                     totalLearnedWords

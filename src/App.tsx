@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import useMatchMedia from 'use-match-media-hook'
-import { setDeviceType } from './redux/features/appSlice'
+import { setDeviceType } from './redux/features'
 import MainNavigation from './components/navigation/MainNavigation'
 import InfoBlock from './components/modalWindows/InfoBlock'
 import { userApi } from './redux/services/userApi'
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from './hooks/reduxHooks'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import Preloader from './assets/Preloader'
+import AnimatedBg from './components/animations/AnimatedBg'
 
 const queries = [
     '(max-width: 639px)',

@@ -6,4 +6,5 @@ export enum NavigationEnum {
     publicDictionary = '/dictionary/:id/:name',
     myDictionary = '/my-dictionary/:id/:access/:name',
     study = '/learn/*',
+    history = '/history',
 }

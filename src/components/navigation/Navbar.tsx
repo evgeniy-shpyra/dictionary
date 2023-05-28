@@ -7,6 +7,8 @@ import { useAppSelector } from '../../hooks/reduxHooks'
 import ArrowCircleLeftIcon from '../../assets/icons/ArrowCircleLeftIcon'
 import classNames from 'classnames'
 import { NavigationEnum } from '../../types/navigation'
+import HistoryIcon from '../../assets/icons/HistoryIcon'
+
 
 const Navbar = () => {
     const { pathname } = useLocation()
@@ -75,6 +77,20 @@ const Navbar = () => {
                         height="45px"
                         color={
                             pathname === NavigationEnum.publicDictionaries
+                                ? '#0D6CBD'
+                                : '#8FA0AF'
+                        }
+                    />
+                </li>
+                <li className={itemStyles}>
+                    <HistoryIcon
+                        onClick={() =>
+                            navigate(NavigationEnum.history)
+                        }
+                        width="45px"
+                        height="45px"
+                        color={
+                            pathname === NavigationEnum.history
                                 ? '#0D6CBD'
                                 : '#8FA0AF'
                         }

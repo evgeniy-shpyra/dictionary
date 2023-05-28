@@ -1,14 +1,11 @@
 import React from 'react'
 import './../../css/menu.css'
-import MenuIcon from '../../assets/icons/MenuIcon'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import classNames from 'classnames'
 import { userApi } from '../../redux/services'
 import useErrorHandler from '../../hooks/useErrorHandler'
-import { openInfoBlock } from '../../redux/features'
-import { getPreviewUrl } from '../../utils/navigateUrl'
-import { useNavigate } from 'react-router-dom'
+import { openInfoBlock, logOut } from '../../redux/features'
 
 const Menu = () => {
     const [isOpen, setIsOpen] = React.useState(false)
@@ -43,8 +40,23 @@ interface DropDownProps {
 }
 
 const DropDown: React.FC<DropDownProps> = ({ isOpen }) => {
-    const [logout, { error }] = userApi.useLogoutMutation()
+    const [logout, { isSuccess, error }] = userApi.useLogoutMutation()
+    const dispatch = useAppDispatch()
 
+    React.useEffect(() => {
+        if (isSuccess) {
+            dispatch(
+                openInfoBlock({
+                    type: 'success',
+                    title: 'Success',
+                    text: 'You are logged out',
+                })
+            )
+            dispatch(logOut())
+        }
+       
+    }, [isSuccess])
+    
     useErrorHandler(error as string)
 
 

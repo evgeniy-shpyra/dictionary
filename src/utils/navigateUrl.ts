@@ -38,6 +38,10 @@ export const getPreviewUrl = () => {
     return NavigationEnum.preview
 }
 
+export const getHistoryUrl = () => {
+    return NavigationEnum.history
+}
+
 export const getCreateDictionaryUrl = () => {
     return NavigationEnum.createDictionary
 }
