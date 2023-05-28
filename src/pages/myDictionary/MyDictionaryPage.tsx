@@ -16,7 +16,6 @@ import {
 
 import { dictionaryApi } from '../../redux/services/dictionaryApi'
 import { IWord } from '../../types/models'
-import Navbar from '../../components/navigation/Navbar'
 import PageContainer from '../../components/containers/PageContainer'
 
 const DictionaryPage: React.FC = () => {
@@ -58,8 +57,20 @@ const DictionaryPage: React.FC = () => {
         }
     }, [inView, isLoading])
 
+    const [idOfChangingElement, setIdOfChangingElement] =
+        React.useState<null | {
+            id: number
+            method: 'delete' | 'post' | 'patch'
+        }>(null)
+
     React.useEffect(() => {
-        if (data) {
+        if (idOfChangingElement) {
+            switch (idOfChangingElement.method) {
+                case 'patch':
+                    // const indexOfUpdatedElement = dataFromApi.words.findIndex(item => item.id === idOfChangingElement.id)
+                    break
+            }
+        } else if (data) {
             setDataFromApi((prevData) => ({
                 pages: data.pages,
                 words: [...prevData.words, ...data.words],
@@ -94,6 +105,9 @@ const DictionaryPage: React.FC = () => {
                         {id && (
                             <ul className="px-[5px] sm:px-[10px]">
                                 <Words
+                                    setIdOfChangingElement={
+                                        setIdOfChangingElement
+                                    }
                                     dictionaryId={Number(id)}
                                     words={dataFromApi.words}
                                     isLoading={isLoading}

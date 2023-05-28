@@ -96,10 +96,8 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
 
         createWord({
             dictionaryId,
-            data: {
-                name: wordValue,
-                translation: translationValue,
-            },
+            name: wordValue,
+            translation: translationValue,
         }).finally(() => {
             setIsOpen(false)
             reset()

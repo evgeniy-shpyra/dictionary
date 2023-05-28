@@ -19,10 +19,5 @@ export interface IGetWordsFromDictionaryResponse {
 export interface IWordRequest {
     name?: string
     translation?: string
-}
-
-export interface ICreateWordRequest {
-    name?: string
-    translation?: string
-    wordId: number
+    dictionaryId?: number
 }

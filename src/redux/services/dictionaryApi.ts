@@ -184,12 +184,12 @@ export const dictionaryApi = createApi({
         }),
         createWord: builder.mutation<
             IWord,
-            { dictionaryId: number; data: IWordRequest }
+            IWordRequest
         >({
             query: (body) => ({
-                url: `word/dictionary/${body.dictionaryId}`,
+                url: `word`,
                 method: 'POST',
-                body: body.data,
+                body: body,
             }),
             invalidatesTags: [
                 { type: 'MyWord', id: 'LIST' },

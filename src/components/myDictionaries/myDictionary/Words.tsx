@@ -8,11 +8,14 @@ import WordsLoader from './WordsLoader'
 
 type WordsProps = {
     dictionaryId: number
+    setIdOfChangingElement: React.Dispatch<React.SetStateAction<{ id: number; method: 'delete' | 'post' | 'patch'; } | null>>
     words: IWord[]
     isLoading: boolean
 }
 
-const Words: React.FC<WordsProps> = ({ dictionaryId, words, isLoading }) => {
+const Words: React.FC<WordsProps> = ({ dictionaryId, words, isLoading, setIdOfChangingElement }) => {
+
+
     const wordsToStudy = useAppSelector((state) => state.study.wordsToStudy)
     const dispatch = useAppDispatch()
 
@@ -31,6 +34,7 @@ const Words: React.FC<WordsProps> = ({ dictionaryId, words, isLoading }) => {
                     return (
                         <div className="" key={item.id}>
                             <Word
+                                setIdOfChangingElement={setIdOfChangingElement}
                                 word={item}
                                 onSelectWord={onSelectWordHandler}
                                 isChecked={wordsToStudy.some(
