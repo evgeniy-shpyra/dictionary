@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom'
 import ArrowCircleLeftIcon from '../../assets/icons/ArrowCircleLeftIcon'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { nextStep, prevStep } from '../../redux/features'
-import Button from '../input/Button'
 import Iteration from './iteration/Iteration'
 import Results from './results/Results'
 import Settings from './settings/Settings'
 import { quizApi } from '../../redux/services/quizApi'
+import useErrorHandler from '../../hooks/useErrorHandler'
 
 const variants: Variants = {
     hidden: { opacity: 0 },
@@ -20,23 +20,19 @@ const variants: Variants = {
     },
 }
 
-
 const StudyNavigation: React.FC = () => {
     const { currentStep, wordsToStudy, studyWay } = useAppSelector(
         (state) => state.study
     )
 
-    // const {
-    //     data: myDictionaries,
-    //     error,
-    //     isLoading,
-    // } = quizApi.useCreateQuizMutation()
+    const [createWord, { isLoading, error, isSuccess: isSuccessCreate, data }] =
+        quizApi.useCreateQuizMutation()
 
-    // useErrorHandler(error as string)
+    useErrorHandler(error as string)
 
-    // React.useState(() => {
-
-    // }, [wordsToStudy])
+    React.useEffect(() => {
+        createWord({ words: wordsToStudy })
+    }, [wordsToStudy])
 
     const navigate = useNavigate()
 
@@ -53,7 +49,7 @@ const StudyNavigation: React.FC = () => {
     }
 
     const goToPreviousStep = React.useCallback(() => {
-        if(currentStep === 0) navigate(-1)
+        if (currentStep === 0) navigate(-1)
         setVisibleIteration(false)
         setTimeout(() => {
             dispatch(prevStep())
@@ -63,34 +59,39 @@ const StudyNavigation: React.FC = () => {
 
     return (
         <div className="h-full w-full flex items-center justify-center">
-            {currentStep === 0 && (
-                <Settings
-                    variants={variants}
-                    isVisible={isVisibleIteration}
-                    goToNextStep={goToNextStep}
-                />
-            )}
-            {currentStep > 0 && currentStep <= studyWay.length && (
-                <Iteration
-                    variants={variants}
-                    goToNextStep={goToNextStep}
-                    isVisible={isVisibleIteration}
-                    name={wordsToStudy[studyWay[currentStep - 1]].name}
-                    answer={wordsToStudy[studyWay[currentStep - 1]].translation}
-                    id={wordsToStudy[studyWay[currentStep - 1]].id}
-                />
-            )}
-            {currentStep > studyWay.length && (
-                <Results isVisible={isVisibleIteration} variants={variants} />
-            )}
-            <div
-                onClick={goToPreviousStep}
-                className="absolute top-[50%] translate-y-[-50%] left-[15px] fill-white hover:fill-[#d1d4d6] transition-colors"
-            >
-                <ArrowCircleLeftIcon width="45px" height="45px" />
-            </div>
+            
         </div>
     )
+    // return (
+    //     <div className="h-full w-full flex items-center justify-center">
+    //         {currentStep === 0 && (
+    //             <Settings
+    //                 variants={variants}
+    //                 isVisible={isVisibleIteration}
+    //                 goToNextStep={goToNextStep}
+    //             />
+    //         )}
+    //         {currentStep > 0 && currentStep <= studyWay.length && (
+    //             <Iteration
+    //                 variants={variants}
+    //                 goToNextStep={goToNextStep}
+    //                 isVisible={isVisibleIteration}
+    //                 name={wordsToStudy[studyWay[currentStep - 1]].name}
+    //                 answer={wordsToStudy[studyWay[currentStep - 1]].translation}
+    //                 id={wordsToStudy[studyWay[currentStep - 1]].id}
+    //             />
+    //         )}
+    //         {currentStep > studyWay.length && (
+    //             <Results isVisible={isVisibleIteration} variants={variants} />
+    //         )}
+    //         <div
+    //             onClick={goToPreviousStep}
+    //             className="absolute top-[50%] translate-y-[-50%] left-[15px] fill-white hover:fill-[#d1d4d6] transition-colors"
+    //         >
+    //             <ArrowCircleLeftIcon width="45px" height="45px" />
+    //         </div>
+    //     </div>
+    // )
 }
 
 export default StudyNavigation

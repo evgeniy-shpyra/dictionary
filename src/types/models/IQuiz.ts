@@ -1,3 +1,5 @@
+import { IWord } from "./IWord"
+
 export interface IQuiz {
     quizId: number
     name?: string
@@ -5,7 +7,11 @@ export interface IQuiz {
 }
 
 export interface ICreateQuizRequest {
-    wordsId: number[]
+    words: IWord[]
+}
+
+export interface ICreateQuizResponse {
+    quizId: number
 }
 
 export interface IVerifyQuizRequest {

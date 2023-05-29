@@ -2,7 +2,7 @@ import { apiUrl } from './api'
 import {
     ICreateQuizRequest,
     IError,
-    IHistory,
+    ICreateQuizResponse,
     IQuiz,
     IVerifyQuizRequest,
 } from './../../types/models'
@@ -52,7 +52,7 @@ export const quizApi = createApi({
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
-        createQuiz: builder.mutation<number, ICreateQuizRequest>({
+        createQuiz: builder.mutation<ICreateQuizResponse, ICreateQuizRequest>({
             query: (body) => ({
                 url: `quiz`,
                 method: 'POST',
