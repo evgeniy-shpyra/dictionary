@@ -14,13 +14,12 @@ import Button from '../../input/Button'
 import PreloaderForElement from '../../../assets/PreloaderForElement'
 
 type WordProps = {
-    setIdOfChangingElement: React.Dispatch<React.SetStateAction<{ id?: number | undefined; method: 'delete' | 'post' | 'patch'; body?: IWord | undefined; } | null>>
     word: IWord
     isChecked: boolean
     onSelectWord: (word: IWord, isChecked: boolean) => void
 }
 
-const Word: React.FC<WordProps> = ({ word, onSelectWord, isChecked, setIdOfChangingElement }) => {
+const Word: React.FC<WordProps> = ({ word, onSelectWord, isChecked }) => {
     const deviceType = useAppSelector((state) => state.app.deviceType)
 
     const [updateWord, { error: updateError, isLoading: isLoadingUpdating, isSuccess: isSuccessUpdate }] =
@@ -113,7 +112,6 @@ const Word: React.FC<WordProps> = ({ word, onSelectWord, isChecked, setIdOfChang
             setIsEditWord((prev) => !prev)
             return
         }
-        setIdOfChangingElement({id: word.id, method: 'patch'})
         updateWord({
             data: {
                 name: wordValue,
@@ -128,7 +126,6 @@ const Word: React.FC<WordProps> = ({ word, onSelectWord, isChecked, setIdOfChang
     const onDeleteWordHandler = () => {
         deleteWord({ wordId: word.id })
         setIsEditWord((prev) => !prev)
-        setIdOfChangingElement({id: word.id, method: 'delete'})
         onSelectWord(word, false)
     }
 

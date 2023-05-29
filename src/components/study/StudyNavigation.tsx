@@ -8,6 +8,7 @@ import Button from '../input/Button'
 import Iteration from './iteration/Iteration'
 import Results from './results/Results'
 import Settings from './settings/Settings'
+import { quizApi } from '../../redux/services/quizApi'
 
 const variants: Variants = {
     hidden: { opacity: 0 },
@@ -24,6 +25,18 @@ const StudyNavigation: React.FC = () => {
     const { currentStep, wordsToStudy, studyWay } = useAppSelector(
         (state) => state.study
     )
+
+    // const {
+    //     data: myDictionaries,
+    //     error,
+    //     isLoading,
+    // } = quizApi.useCreateQuizMutation()
+
+    // useErrorHandler(error as string)
+
+    // React.useState(() => {
+
+    // }, [wordsToStudy])
 
     const navigate = useNavigate()
 

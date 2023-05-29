@@ -1,4 +1,3 @@
-import { current } from '@reduxjs/toolkit'
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks'
 import { addWordToStudy, deleteWordToStudy } from '../../../redux/features'
@@ -8,12 +7,11 @@ import WordsLoader from './WordsLoader'
 
 type WordsProps = {
     dictionaryId: number
-    setIdOfChangingElement: React.Dispatch<React.SetStateAction<{ id?: number | undefined; method: 'delete' | 'post' | 'patch'; body?: IWord | undefined; } | null>>
     words: IWord[]
     isLoading: boolean
 }
 
-const Words: React.FC<WordsProps> = ({ dictionaryId, words, isLoading, setIdOfChangingElement }) => {
+const Words: React.FC<WordsProps> = ({ dictionaryId, words, isLoading }) => {
 
 
     const wordsToStudy = useAppSelector((state) => state.study.wordsToStudy)
@@ -34,7 +32,6 @@ const Words: React.FC<WordsProps> = ({ dictionaryId, words, isLoading, setIdOfCh
                     return (
                         <div className="" key={item.id}>
                             <Word
-                                setIdOfChangingElement={setIdOfChangingElement}
                                 word={item}
                                 onSelectWord={onSelectWordHandler}
                                 isChecked={wordsToStudy.some(

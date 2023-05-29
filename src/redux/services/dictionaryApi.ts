@@ -16,10 +16,7 @@ export const dictionaryApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrl,
         prepareHeaders: (headers) => {
-            headers.set(
-                "ngrok-skip-browser-warning",
-                "true"
-            );
+            headers.set('ngrok-skip-browser-warning', 'true')
             if (localStorage.getItem('token')) {
                 headers.set(
                     'Authorization',
@@ -32,10 +29,9 @@ export const dictionaryApi = createApi({
     tagTypes: ['MyDictionary', 'MyWord', '1'],
     endpoints: (builder) => ({
         //----------------Dictionary------------------
-        getMyDictionaries: builder.query< IDictionary[], void>({
+        getMyDictionaries: builder.query<IDictionary[], void>({
             query: () => ({ url: '/dictionary' }),
             providesTags: (result) => {
-                
                 return result
                     ? [
                           ...result.map(({ id }) => ({
@@ -45,8 +41,6 @@ export const dictionaryApi = createApi({
                           { type: 'MyDictionary', id: 'LIST' },
                       ]
                     : [{ type: 'MyDictionary', id: 'LIST' }]
-                
-                
             },
             transformErrorResponse: (
                 response: {
@@ -136,7 +130,8 @@ export const dictionaryApi = createApi({
             { page: number; dictionaryId: number | string }
         >({
             query: ({ page, dictionaryId }) => ({
-                url: `dictionary/${dictionaryId}?page=${page}&limit=10`,
+                // url: `dictionary/${dictionaryId}?page=${page}&limit=10`,
+                url: `dictionary/${dictionaryId}`,
             }),
             providesTags: (result) =>
                 result
@@ -182,17 +177,14 @@ export const dictionaryApi = createApi({
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
-        createWord: builder.mutation<
-            IWord,
-            IWordRequest
-        >({
+        createWord: builder.mutation<IWord, IWordRequest>({
             query: (body) => ({
                 url: `word`,
                 method: 'POST',
                 body: body,
             }),
             invalidatesTags: [
-                { type: 'MyWord', id: 'LIST' },
+                // { type: 'MyWord', id: 'LIST' },
                 { type: 'MyDictionary', id: 'LIST' },
             ],
             transformErrorResponse: (

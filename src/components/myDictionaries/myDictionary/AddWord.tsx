@@ -12,19 +12,14 @@ import { IWord } from '../../../types/models'
 
 type AddWordProps = {
     dictionaryId: number
-    setIdOfChangingElement: React.Dispatch<React.SetStateAction<{ id?: number | undefined; method: 'delete' | 'post' | 'patch'; body?: IWord | undefined; } | null>>
     addWord: (newWord: IWord) => void
 }
 
-const AddWord: React.FC<AddWordProps> = ({ dictionaryId, addWord, setIdOfChangingElement }) => {
+const AddWord: React.FC<AddWordProps> = ({ dictionaryId, addWord }) => {
     const dispatch = useAppDispatch()
 
     const [createWord, { isLoading, error, isSuccess: isSuccessCreate, data }] =
         dictionaryApi.useCreateWordMutation()
-
-    React.useEffect(()=>{
-        data && addWord(data)
-    }, [data])
 
     const deviceType = useAppSelector((state) => state.app.deviceType)
 
@@ -39,6 +34,16 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId, addWord, setIdOfChangin
             )
         }
     }, [isSuccessCreate])
+
+    React.useEffect(() => {
+        if (data) {
+            addWord(data)
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            })
+        }
+    }, [data])
 
     useErrorHandler(error as string)
 
@@ -100,7 +105,7 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId, addWord, setIdOfChangin
         if (isError) return
 
         // setIsLoading(true)
-        setIdOfChangingElement({method: 'post'})
+
         createWord({
             dictionaryId,
             name: wordValue,
@@ -108,6 +113,7 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId, addWord, setIdOfChangin
         }).finally(() => {
             setIsOpen(false)
             reset()
+            // updatePagination()
         })
     }
 

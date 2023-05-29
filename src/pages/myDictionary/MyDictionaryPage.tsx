@@ -27,19 +27,11 @@ const DictionaryPage: React.FC = () => {
         page: number
     }>({ page: 1 })
 
-    const [dataFromApi, setDataFromApi] = React.useState<{
-        words: IWord[]
-        pages: number
-    }>({
-        words: [],
-        pages: 1,
-    })
+    const [dataFromApi, setDataFromApi] = React.useState<IWord[]>([])
 
     const addWord = (newWord: IWord) => {
-        setDataFromApi(prevData => {
-            const newData = prevData
-            newData.words.unshift(newWord)
-            return newData
+        setDataFromApi((prevData) => {
+            return [newWord, ...prevData]
         })
     }
 
@@ -53,93 +45,19 @@ const DictionaryPage: React.FC = () => {
         if (data) dispatch(setTotalInformationAboutMyDictionary(data))
     }, [data])
 
-    const { ref, inView } = useInView({
-        threshold: 0,
-    })
+
 
     React.useEffect(() => {
-        if (inView && !isLoading) {
-            setQueryData((prev) => ({
-                page: prev.page < dataFromApi.pages ? prev.page + 1 : prev.page,
-            }))
-        }
-    }, [inView, isLoading])
-
-    const [idOfChangingElement, setIdOfChangingElement] =
-        React.useState<null | {
-            id?: number
-            method: 'delete' | 'post' | 'patch'
-        }>(null)
-
-    React.useEffect(() => {
-        if (idOfChangingElement && data) {
-            if (idOfChangingElement.method === 'patch') {
-                const indexOfUpdatedElementInVueArray =
-                    dataFromApi.words.findIndex(
-                        (item) => item.id === idOfChangingElement.id
-                    )
-                const indexOfUpdatedElementInApiArray = data.words.findIndex(
-                    (item) => item.id === idOfChangingElement.id
-                )
-                if (indexOfUpdatedElementInVueArray >= 0)
-                    setDataFromApi((prevData) => {
-                        const newState = prevData
-                        newState.words.splice(
-                            indexOfUpdatedElementInVueArray,
-                            1,
-                            data.words[indexOfUpdatedElementInApiArray]
-                        )
-                        return {
-                            pages: data.pages,
-                            words: [...prevData.words],
-                        }
-                    })
-            } else if (idOfChangingElement.method === 'delete') {
-                const indexOfUpdatedElementInVueArray =
-                    dataFromApi.words.findIndex(
-                        (item) => item.id === idOfChangingElement.id
-                    )
-                if (indexOfUpdatedElementInVueArray >= 0)
-                    setDataFromApi((prevData) => {
-                        const newState = prevData
-                        newState.words.splice(
-                            indexOfUpdatedElementInVueArray,
-                            1
-                        )
-                        return {
-                            pages: data.pages,
-                            words: [...prevData.words],
-                        }
-                    })
-            } else if (idOfChangingElement.method === 'post') {
-                setDataFromApi((prevData) => {
-                    
-                    return {
-                        pages: data.pages,
-                        words: prevData.words,
-                    }
-                })
-            }
-        } else if (data) {
-            setDataFromApi((prevData) => ({
-                pages: data.pages,
-                words: [...prevData.words, ...data.words],
-            }))
+        if (data) {
+            setDataFromApi(data.words)
         }
     }, [data])
 
     useErrorHandler(error as string)
 
-    React.useEffect(() => {
-        dispatch(deleteWordToStudy())
-        return () => {
-            setDataFromApi({ words: [], pages: 1 })
-            setQueryData({ page: 1 })
-        }
-    }, [])
 
     return (
-        <PageContainer withNavbar>
+        <PageContainer withNavbar withMenu>
             <div className="w-full max-w-[900px] h-full mx-auto pt-[40px]  animate-appearance">
                 <HeaderUnderFullPage>
                     {id && name && access && (
@@ -155,16 +73,11 @@ const DictionaryPage: React.FC = () => {
                         {id && (
                             <ul className="px-[5px] sm:px-[10px]">
                                 <Words
-                                    setIdOfChangingElement={
-                                        setIdOfChangingElement
-                                    }
                                     dictionaryId={Number(id)}
-                                    words={dataFromApi.words}
+                                    words={dataFromApi}
                                     isLoading={isLoading}
                                 />
-                                <div ref={ref} />
                                 <AddWord
-                                    setIdOfChangingElement={setIdOfChangingElement}
                                     addWord={addWord}
                                     dictionaryId={Number(id)}
                                 />
