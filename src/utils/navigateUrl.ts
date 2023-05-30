@@ -53,3 +53,16 @@ export const getPublicDictionariesUrl = () => {
 export const getStudyUrl = () => {
     return NavigationEnum.study
 }
+export const getQuizUrl = (params: {
+    id: number
+}) => {
+    const url = spliceString(NavigationEnum.quiz, ':id', String(params.id)).slice(1)
+    return NavigationEnum.study.slice(0, -1) + url
+}
+
+export const getResultsUrl = (params: {
+    id: number
+}) => {
+    const url = spliceString(NavigationEnum.quiz + NavigationEnum.results, ':id', String(params.id)).slice(1)
+    return NavigationEnum.study.slice(0, -1) + url
+}

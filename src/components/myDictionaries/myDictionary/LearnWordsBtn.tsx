@@ -2,6 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../../hooks/reduxHooks'
 import Button from '../../input/Button'
+import { getQuizUrl } from '../../../utils/navigateUrl'
+import { NavigationEnum } from '../../../types/navigation'
 
 const LearnWordsBtn: React.FC = () => {
     const wordsToStudy = useAppSelector((state) => state.study.wordsToStudy)
@@ -19,7 +21,7 @@ const LearnWordsBtn: React.FC = () => {
     }, [wordsToStudy])
 
     const onClickLearnWordsHandler = () => {
-        navigate(`/learn`)
+        navigate('/quiz')
     }
 
     return (

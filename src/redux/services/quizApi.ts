@@ -5,12 +5,14 @@ import {
     ICreateQuizResponse,
     IQuiz,
     IVerifyQuizRequest,
+    IGetQuizResponse,
 } from './../../types/models'
 import { transformErrorFromApi } from '../../utils/transforErrorFromApi'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const quizApi = createApi({
     reducerPath: 'quizApi',
+   
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrl,
         prepareHeaders: (headers) => {
@@ -26,19 +28,11 @@ export const quizApi = createApi({
     }),
     tagTypes: ['Quiz'],
     endpoints: (builder) => ({
-        getQuiz: builder.query<IQuiz[], number>({
+        getQuiz: builder.query<IGetQuizResponse, number>({
             query: (quizId) => ({ url: `/quiz/${quizId}` }),
-            providesTags: (result) => {
-                return result
-                    ? [
-                          ...result.map(({ quizId }) => ({
-                              type: 'Quiz' as const,
-                              id: quizId,
-                          })),
-                          { type: 'Quiz', id: 'LIST' },
-                      ]
-                    : [{ type: 'Quiz', id: 'LIST' }]
-            },
+            providesTags: ['Quiz'],
+      
+            
             transformErrorResponse: (
                 response: {
                     status: number
@@ -57,7 +51,8 @@ export const quizApi = createApi({
                 url: `quiz`,
                 method: 'POST',
                 body: body,
-            }),
+            }), 
+     
             // invalidatesTags: [
                 // { type: 'MyWord', id: 'LIST' },
                 // { type: 'MyDictionary', id: 'LIST' },
@@ -81,6 +76,7 @@ export const quizApi = createApi({
                 method: 'POST',
                 body: data.body
             }),
+        
             transformErrorResponse: (
                 response: {
                     status: number
@@ -93,6 +89,7 @@ export const quizApi = createApi({
                     return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
+            invalidatesTags: ['Quiz'],
         }),
     }),
 

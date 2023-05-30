@@ -83,12 +83,10 @@ export const dictionaryApi = createApi({
         }),
         getAllPublicDictionaries: builder.query<
             IGetAllPublicDictionariesResponse,
-            { page: number; name: string }
+            { name: string }
         >({
             query: (data) => ({
-                url: `/dictionary/public?page=${data.page}&limit=10${
-                    data.name && `&name=${data.name}`
-                }`,
+                url: `/dictionary/public?${data.name && `&name=${data.name}`}`,
             }),
             transformErrorResponse: (
                 response: {
