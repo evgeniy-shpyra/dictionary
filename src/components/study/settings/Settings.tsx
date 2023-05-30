@@ -1,21 +1,23 @@
 import { AnimatePresence, Variants, motion } from 'framer-motion'
 import React from 'react'
 import { useAppSelector } from '../../../hooks/reduxHooks'
+import Modes from './Modes'
 
-interface ResultsProps {
+interface SettingsProps {
     variants: Variants
     isVisible: boolean
-
+    goToNextStep: () => void
 }
 
-const Results: React.FC<ResultsProps> = ({
+const Settings: React.FC<SettingsProps> = ({
     variants,
     isVisible,
-
+    goToNextStep,
 }) => {
     const secondaryColor = useAppSelector(
         (state) => state.app.colors.secondaryColor
     )
+
     return (
         <AnimatePresence>
             {isVisible && (
@@ -24,14 +26,15 @@ const Results: React.FC<ResultsProps> = ({
                     initial="hidden"
                     animate="visible"
                     exit="hidden"
-                    className="w-full h-[500px] rounded-[25px] shadow-primary p-[30px] flex flex-col"
+                    className="w-full  rounded-[25px] shadow-primary p-[30px] flex flex-col"
                     style={{ backgroundColor: secondaryColor }}
                 >
-                    Results
+                    <Modes goToNextStep={goToNextStep} />
+                    
                 </motion.div>
             )}
         </AnimatePresence>
     )
 }
 
-export default Results
+export default Settings
