@@ -30,7 +30,7 @@ const Settings: React.FC<SettingsProps> = ({
                     style={{ backgroundColor: secondaryColor }}
                 >
                     <Modes goToNextStep={goToNextStep} />
-                    <div className="mt-[30px] h-[400px] bg-white rounded-[15px] shadow-secondary flex-auto w-full"></div>
+                    
                 </motion.div>
             )}
         </AnimatePresence>

@@ -14,8 +14,4 @@ export interface ICreateDictionaryWithWordsRequest {
 
 export type IGetAllPublicDictionariesResponse = {
     dictionaries: IDictionary[]
-    count: number
-    page: number
-    limit: number
-    pages: number
 }

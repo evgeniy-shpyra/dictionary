@@ -33,4 +33,4 @@ const Modes: React.FC<ModesProps> = ({ goToNextStep }) => {
     )
 }
 
-export default Modes
+export default Modes    
