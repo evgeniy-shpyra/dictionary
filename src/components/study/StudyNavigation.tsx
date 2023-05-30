@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import Iteration from './iteration/Iteration'
 import { NavigationEnum } from '../../types/navigation'
+import Results from './results/Results'
 
 
 const variants: Variants = {
@@ -24,6 +25,10 @@ const StudyNavigation: React.FC = () => {
                 <Route
                     path={NavigationEnum.quiz}
                     element={<Iteration variants={variants} />}
+                />
+                 <Route
+                    path={NavigationEnum.results}
+                    element={<Results variants={variants} />}
                 />
             </Routes>
         </div>

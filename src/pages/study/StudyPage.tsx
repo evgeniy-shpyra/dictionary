@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { quizApi } from '../../redux/services/quizApi'
 import useErrorHandler from '../../hooks/useErrorHandler'
 import { getQuizUrl } from '../../utils/navigateUrl'
+import { NavigationEnum } from '../../types/navigation'
 
 const StudyPage = () => {
     const dispatch = useAppDispatch()
@@ -32,7 +33,7 @@ const StudyPage = () => {
     }, [])
 
     const goToPreviousStep = () => {
-        navigate(-1)
+        navigate(NavigationEnum.myDictionaries)
     }
 
     React.useEffect(()=>{

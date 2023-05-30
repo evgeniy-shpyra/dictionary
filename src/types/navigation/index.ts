@@ -7,5 +7,6 @@ export enum NavigationEnum {
     myDictionary = '/my-dictionary/:id/:access/:name',
     study = '/quiz/*',
     quiz = '/:id',
+    results = '/results',
     history = '/history',
 }

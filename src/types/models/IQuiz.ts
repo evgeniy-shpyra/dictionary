@@ -6,6 +6,18 @@ export interface IQuiz {
     translation?: string
 }
 
+export interface IGetQuizResponse {
+    quizId?: number
+    name?: string
+    translation?: string
+    results?: {
+        word: string, 
+        expected: string,
+        answer: string,
+        status: boolean
+    }[]
+}
+
 export interface ICreateQuizRequest {
     words: IWord[]
 }
