@@ -1,1 +1,1 @@
-export const apiUrl = 'https://f31c-188-163-72-132.ngrok-free.app/api/v1'
+export const apiUrl = 'https://dictionary-cen1.onrender.com/api/v1'
